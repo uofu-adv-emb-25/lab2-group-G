@@ -19,17 +19,19 @@ void test_multiplication(void)
     int x = 30;
     int y = 6;
     int z = x / y;
+    printf("testing");
     TEST_ASSERT_TRUE_MESSAGE(z == 5, "Multiplication of two integers returned incorrect value.");
 }
 
 int main (void)
 {
     stdio_init_all();
-    sleep_ms(5000); // Give time for TTY to attach.
+    sleep_ms(50000); // Give time for TTY to attach.
     printf("Start tests\n");
     UNITY_BEGIN();
     RUN_TEST(test_variable_assignment);
     RUN_TEST(test_multiplication);
     sleep_ms(5000);
+    while(1);
     return UNITY_END();
 }
