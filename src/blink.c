@@ -12,6 +12,7 @@
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
 #include "pico/cyw43_arch.h"
+#include "my_functions.h"
 
 int count = 0;
 bool on = false;
@@ -26,12 +27,9 @@ bool on = false;
 void blink_task(__unused void *params) {
     // assert that the pico is running and initialized
     hard_assert(cyw43_arch_init() == PICO_OK);
+    int count = 0;
     while (true) {
-        // set led to value of `on`
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, on);
-        // toggle the count every time except for multiples of 11? seems weird...
-        if (count++ % 11) on = !on;
-        vTaskDelay(500);
+        blink_led(&count);
     }
 }
 
@@ -43,12 +41,8 @@ void main_task(__unused void *params) {
     char c;
     // while we can get a char from stdin
     while(c = getchar()) {
-        // if the entered char is a lower case letter, put the lowercase letter - 32 in the ascii table
-        if (c <= 'z' && c >= 'a') putchar(c - 32);
-        // else if the entered char is upper case, put the letter + 32 on the ascii table
-        else if (c >= 'A' && c <= 'Z') putchar(c + 32);
-        // else just put the character
-        else putchar(c);
+        char result = shiftChar(c);
+        putchar(result);
     }
 }
 
