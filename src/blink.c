@@ -29,7 +29,8 @@ void blink_task(__unused void *params) {
     hard_assert(cyw43_arch_init() == PICO_OK);
     int count = 0;
     while (true) {
-        blink_led(&count);
+        on = blink_led(&count, on);
+        vTaskDelay(500);
     }
 }
 

@@ -12,11 +12,11 @@ char shiftChar(char c)
     else return c;
 }
 
-void blink_led(int *count)
+bool blink_led(int* count, bool on)
 {
     // set led to value of `on`
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, on);
     // toggle the count every time except for multiples of 11? seems weird...
-    if ((*count)++ % 11) on = !on;
-    vTaskDelay(500);
+    if ((*count)++ % 11) return !on;
+    return on;
 }
